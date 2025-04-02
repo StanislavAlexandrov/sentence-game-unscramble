@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,26 +13,32 @@
             padding: 20px;
             background-color: #f5f5f5;
         }
+
         h1 {
             text-align: center;
             color: #333;
         }
+
         .game-container {
             background-color: white;
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         .original-sentence {
             margin-bottom: 20px;
             padding: 15px;
-            background-color: #e8f4fd; /* Slightly different color */
+            background-color: #e8f4fd;
+            /* Slightly different color */
             border: 1px solid #bde0fe;
             border-radius: 5px;
             font-weight: bold;
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
             color: #333;
         }
+
         .word-container {
             display: flex;
             flex-wrap: wrap;
@@ -41,17 +48,21 @@
             border: 2px dashed #ccc;
             padding: 15px;
             border-radius: 5px;
-            transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+            /* Smooth transitions */
         }
+
         /* Style for when dragging over the container */
         .word-container.drag-over {
             border-color: #3498db;
             background-color: #eaf5ff;
             border-style: solid;
         }
+
         /* Style for incorrect answer feedback */
         .word-container.incorrect {
-            border-color: #e74c3c; /* Red border */
+            border-color: #e74c3c;
+            /* Red border */
             border-style: solid;
         }
 
@@ -62,17 +73,24 @@
             border-radius: 4px;
             cursor: move;
             user-select: none;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            touch-action: none; /* Prevent scrolling on touch devices when dragging */
-            transition: opacity 0.2s ease; /* Smooth opacity transition */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            touch-action: none;
+            /* Prevent scrolling on touch devices when dragging */
+            transition: opacity 0.2s ease;
+            /* Smooth opacity transition */
         }
-        .word.dragging { /* Class applied during drag */
-             opacity: 0.5;
+
+        .word.dragging {
+            /* Class applied during drag */
+            opacity: 0.5;
         }
+
         .punctuation {
-            background-color: #e74c3c; /* Different color for punctuation */
+            background-color: #e74c3c;
+            /* Different color for punctuation */
             font-weight: bold;
         }
+
         .success-message {
             position: fixed;
             top: 50%;
@@ -84,13 +102,16 @@
             font-size: 24px;
             border-radius: 8px;
             display: none;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             z-index: 1000;
             text-align: center;
         }
+
         button {
-            display: inline-block; /* Allow multiple buttons side-by-side */
-            margin: 20px 10px 0 10px; /* Adjust margin */
+            display: inline-block;
+            /* Allow multiple buttons side-by-side */
+            margin: 20px 10px 0 10px;
+            /* Adjust margin */
             padding: 10px 20px;
             background-color: #3498db;
             color: white;
@@ -100,22 +121,29 @@
             font-size: 16px;
             transition: background-color 0.2s ease;
         }
+
         button:hover {
             background-color: #2980b9;
         }
+
         button#give-up-button {
             background-color: #e74c3c;
         }
+
         button#give-up-button:hover {
             background-color: #c0392b;
         }
+
         button:disabled {
             background-color: #bdc3c7;
             cursor: not-allowed;
         }
-        .button-container { /* Center buttons */
-             text-align: center;
+
+        .button-container {
+            /* Center buttons */
+            text-align: center;
         }
+
         .instructions {
             margin-bottom: 20px;
             font-style: italic;
@@ -124,11 +152,13 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Sentence Rearrangement Game</h1>
 
     <div class="game-container">
-        <div class="instructions">Drag and drop the words and punctuation below to reconstruct the original sentence.</div>
+        <div class="instructions">Drag and drop the words and punctuation below to reconstruct the original sentence.
+        </div>
         <div class="original-sentence" id="original-sentence">Loading sentence...</div>
         <div class="word-container" id="word-container">
             <!-- Words will be added here dynamically -->
@@ -145,16 +175,12 @@
     <script>
         // Sample sentences to rearrange
         const sentences = [
-            "The quick brown fox jumps over the lazy dog.",
-            "All that glitters is not gold.",
-            "Good things come to those who wait.",
-            "A picture is worth a thousand words?", // Added question mark example
-            "Don't count your chickens before they hatch!", // Added exclamation mark example
-            "Actions speak louder than words.",
-            "You can't judge a book by its cover.",
-            "Rome wasn't built in a day.",
-            "Practice makes perfect.",
-            "The early bird catches the worm."
+            "She is used to working on weekends.",
+            "Have you bought the tickets yet?",
+            "He has been married to her for 5 years.",
+            "I am looking forward to seeing him.",
+            "I do not mind waiting."
+
         ];
 
         let currentSentenceIndex = 0;
@@ -298,7 +324,7 @@
                 setTimeout(() => {
                     wordContainer.classList.remove('incorrect');
                 }, 1000); // Keep border red for 1 second
-                 console.log("Incorrect answer.");
+                console.log("Incorrect answer.");
             }
         }
 
@@ -320,15 +346,15 @@
             // Rearrange the words in the container to show the correct order (optional, but good feedback)
             wordContainer.innerHTML = ''; // Clear current arrangement
             originalWords.forEach(item => {
-                 const wordElement = document.createElement('div');
-                 wordElement.className = 'word';
-                 wordElement.textContent = item;
-                 wordElement.draggable = false; // Make non-draggable
-                 wordElement.style.cursor = 'default';
-                 if (/^[.,!?;:]$/.test(item)) {
-                     wordElement.classList.add('punctuation');
-                 }
-                 wordContainer.appendChild(wordElement);
+                const wordElement = document.createElement('div');
+                wordElement.className = 'word';
+                wordElement.textContent = item;
+                wordElement.draggable = false; // Make non-draggable
+                wordElement.style.cursor = 'default';
+                if (/^[.,!?;:]$/.test(item)) {
+                    wordElement.classList.add('punctuation');
+                }
+                wordContainer.appendChild(wordElement);
             });
             wordContainer.classList.remove('incorrect'); // Ensure no incorrect styling
 
@@ -378,25 +404,25 @@
 
         function handleDragEnter(e) {
             e.preventDefault(); // Allow drop
-             // Add visual feedback when entering the drop zone
-             if (e.target === wordContainer) {
-                 wordContainer.classList.add('drag-over');
-                 console.log("Drag Enter Container");
-             }
+            // Add visual feedback when entering the drop zone
+            if (e.target === wordContainer) {
+                wordContainer.classList.add('drag-over');
+                console.log("Drag Enter Container");
+            }
         }
 
         function handleDragLeave(e) {
-             // Remove visual feedback if leaving the container itself, not just moving over children
-             if (e.target === wordContainer) {
-                 // Check if the mouse is truly leaving the container bounds
-                 // This simple check might not be perfect with gaps between words
-                 const rect = wordContainer.getBoundingClientRect();
-                 if (e.clientX <= rect.left || e.clientX >= rect.right || e.clientY <= rect.top || e.clientY >= rect.bottom) {
-                      wordContainer.classList.remove('drag-over');
-                      console.log("Drag Leave Container");
-                 }
-             }
-             // More robust leave detection might be needed for complex layouts
+            // Remove visual feedback if leaving the container itself, not just moving over children
+            if (e.target === wordContainer) {
+                // Check if the mouse is truly leaving the container bounds
+                // This simple check might not be perfect with gaps between words
+                const rect = wordContainer.getBoundingClientRect();
+                if (e.clientX <= rect.left || e.clientX >= rect.right || e.clientY <= rect.top || e.clientY >= rect.bottom) {
+                    wordContainer.classList.remove('drag-over');
+                    console.log("Drag Leave Container");
+                }
+            }
+            // More robust leave detection might be needed for complex layouts
         }
 
         function handleDrop(e) {
@@ -463,4 +489,5 @@
 
     </script>
 </body>
+
 </html>
